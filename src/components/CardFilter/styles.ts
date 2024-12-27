@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 import { Props } from '.'
 
-export const Card = styled.div<Props>`
+type PropsNoSubtitleCounter = Omit<Props, 'counter' | 'subtitle'>
+
+export const Card = styled.div<PropsNoSubtitleCounter>`
   padding: 8px;
   border: 1px solid ${(props) => (props.active ? '#1e90ff' : '#a1a1a1')};
   border-radius: 8px;
