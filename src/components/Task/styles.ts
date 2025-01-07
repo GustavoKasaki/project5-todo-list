@@ -1,4 +1,21 @@
 import styled from 'styled-components'
+import _var from '../../styles/var'
+
+type TagProps = {
+  priority?: string
+  status?: string
+}
+
+function returnBgColor(props: TagProps): string {
+  if ('status' in props) {
+    if (props.status === 'pending') return _var.yellow
+    if (props.status === 'finished') return _var.green
+  } else if ('priority' in props) {
+    if (props.priority === 'urgent') return _var.red
+    if (props.priority === 'important') return _var.yellow2
+  }
+  return '#ccc'
+}
 
 export const Card = styled.div`
   background-color: #fcfcfc;
@@ -14,9 +31,9 @@ export const Title = styled.h3`
   margin-bottom: 16px;
 `
 
-export const Tag = styled.span`
+export const Tag = styled.span<TagProps>`
   padding: 4px 8px;
-  background-color: #e1a32a;
+  background-color: ${(props) => returnBgColor(props)};
   color: #fff;
   font-size: 10px;
   font-weight: bold;
@@ -54,4 +71,12 @@ export const Button = styled.button`
   cursor: pointer;
   background-color: #2f3640;
   color: #fff;
+`
+
+export const SaveBtn = styled(Button)`
+  background-color: ${_var.green};
+`
+
+export const CancelBtn = styled(Button)`
+  background-color: ${_var.red};
 `
