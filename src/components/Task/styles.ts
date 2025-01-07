@@ -1,18 +1,20 @@
 import styled from 'styled-components'
 import _var from '../../styles/var'
+import * as enums from '../../utility/enums/Task'
 
 type TagProps = {
-  priority?: string
-  status?: string
+  priority?: enums.Priority
+  status?: enums.Status
+  parameter: 'status' | 'priority'
 }
 
 function returnBgColor(props: TagProps): string {
-  if ('status' in props) {
-    if (props.status === 'pending') return _var.yellow
-    if (props.status === 'finished') return _var.green
-  } else if ('priority' in props) {
-    if (props.priority === 'urgent') return _var.red
-    if (props.priority === 'important') return _var.yellow2
+  if (props.parameter === 'priority') {
+    if (props.priority === enums.Priority.URGENT) return _var.red
+    if (props.priority === enums.Priority.IMPORTANT) return _var.yellow2
+  } else {
+    if (props.status === enums.Status.PENDING) return _var.yellow
+    if (props.status === enums.Status.DONE) return _var.green
   }
   return '#ccc'
 }
