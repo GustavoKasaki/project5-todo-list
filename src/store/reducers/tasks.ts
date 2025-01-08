@@ -2,34 +2,42 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import Task from '../../models/Task'
 import * as enums from '../../utility/enums/Task'
 
+type TaskState = {
+  items: Task[]
+}
+
+const initialState: TaskState = {
+  items: [
+    {
+      id: 1,
+      title: 'Study Javascript',
+      description: '',
+      priority: enums.Priority.IMPORTANT,
+      status: enums.Status.PENDING
+    },
+    {
+      id: 2,
+      title: 'Study guitar tabs',
+      description: 'Search UltimateGuitarTabs.com',
+      priority: enums.Priority.NORMAL,
+      status: enums.Status.DONE
+    },
+    {
+      id: 3,
+      title: 'Pay rent',
+      description: 'Pay before friday',
+      priority: enums.Priority.URGENT,
+      status: enums.Status.PENDING
+    }
+  ]
+}
+
 const taskSlice = createSlice({
   name: 'tasks',
-  initialState: [
-    new Task(
-      'Study Javascript',
-      enums.Priority.IMPORTANT,
-      enums.Status.PENDING,
-      '',
-      1
-    ),
-    new Task(
-      'Study guitar tabs',
-      enums.Priority.NORMAL,
-      enums.Status.DONE,
-      'Search UltimateGuitarTabs.com',
-      2
-    ),
-    new Task(
-      'Pay rent',
-      enums.Priority.URGENT,
-      enums.Status.PENDING,
-      'Pay before friday',
-      3
-    )
-  ],
+  initialState,
   reducers: {
     remove: (state, action: PayloadAction<number>) => {
-      state = state.filter((task) => task.id !== action.payload)
+      state.items = state.items.filter((task) => task.id !== action.payload)
     }
   }
 })
