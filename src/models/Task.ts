@@ -1,6 +1,6 @@
 import * as enums from '../utility/enums/Task'
 
-class Task {
+class TaskClass {
   title: string
   priority: enums.Priority
   status: enums.Status
@@ -22,4 +22,4 @@ class Task {
   }
 }
 
-export default Task
+export default TaskClass

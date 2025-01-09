@@ -1,16 +1,34 @@
 import { useDispatch } from 'react-redux'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import * as S from './styles'
 import * as enums from '../../utility/enums/Task'
-import { remove } from '../../store/reducers/tasks'
+import { remove, edit } from '../../store/reducers/tasks'
 import TaskClass from '../../models/Task'
 
 type Props = TaskClass
 
-const Task = ({ description, priority, status, title, id }: Props) => {
+const Task = ({
+  description: originalDescription,
+  priority,
+  status,
+  title,
+  id
+}: Props) => {
   const dispatch = useDispatch()
   const [isEditing, setIsEditing] = useState(false)
+  const [description, setDescription] = useState('')
+
+  useEffect(() => {
+    if (originalDescription.length > 0) {
+      setDescription(originalDescription)
+    }
+  }, [originalDescription])
+
+  function cancelEdit() {
+    setIsEditing(false)
+    setDescription(originalDescription)
+  }
 
   return (
     <S.Card>
@@ -21,12 +39,31 @@ const Task = ({ description, priority, status, title, id }: Props) => {
       <S.Tag parameter="status" status={status}>
         {status}
       </S.Tag>
-      <S.Description value={description} />
+      <S.Description
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        disabled={!isEditing}
+      />
       <S.ActionBar>
         {isEditing ? (
           <>
-            <S.SaveBtn onClick={() => setIsEditing(false)}>Save</S.SaveBtn>
-            <S.CancelBtn>Discard changes</S.CancelBtn>
+            <S.SaveBtn
+              onClick={() => {
+                dispatch(
+                  edit({
+                    description,
+                    priority,
+                    status,
+                    title,
+                    id
+                  })
+                )
+                setIsEditing(false)
+              }}
+            >
+              Save
+            </S.SaveBtn>
+            <S.CancelBtn onClick={cancelEdit}>Discard changes</S.CancelBtn>
           </>
         ) : (
           <>
