@@ -1,5 +1,4 @@
 import styled, { createGlobalStyle } from 'styled-components'
-import { Button } from '../components/Task/styles'
 import _var from './var'
 
 const GlobalStyle = createGlobalStyle`
@@ -39,6 +38,18 @@ export const Input = styled.input`
   color: #666666;
   border-color: #666666;
   width: 100%;
+`
+
+export const Button = styled.button`
+  font-size: 12px;
+  font-weight: bold;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  margin-right: 8px;
+  cursor: pointer;
+  background-color: ${_var.darkblue};
+  color: #fff;
 `
 
 export const SaveBtn = styled(Button)`

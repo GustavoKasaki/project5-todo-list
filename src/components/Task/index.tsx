@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 import * as S from './styles'
-import { remove, edit } from '../../store/reducers/tasks'
+import * as enums from '../../utility/enums/Task'
+import { remove, edit, changeStatus } from '../../store/reducers/tasks'
 import TaskClass from '../../models/Task'
-import { SaveBtn } from '../../styles'
+import { Button, SaveBtn } from '../../styles'
 
 type Props = TaskClass
 
@@ -30,9 +31,24 @@ const Task = ({
     setDescription(originalDescription)
   }
 
+  const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeStatus({ id, done: e.target.checked }))
+  }
+
   return (
     <S.Card>
-      <S.Title>{title}</S.Title>
+      <label htmlFor={title}>
+        <input
+          type="checkbox"
+          id={title}
+          checked={status === enums.Status.DONE}
+          onChange={changeTaskStatus}
+        />
+        <S.Title>
+          {isEditing && <em>Editing: </em>}
+          {title}
+        </S.Title>
+      </label>
       <S.Tag parameter="priority" priority={priority}>
         {priority}
       </S.Tag>
@@ -67,7 +83,7 @@ const Task = ({
           </>
         ) : (
           <>
-            <S.Button onClick={() => setIsEditing(true)}>Edit</S.Button>
+            <Button onClick={() => setIsEditing(true)}>Edit</Button>
             <S.CancelBtn onClick={() => dispatch(remove(id))}>
               Remove
             </S.CancelBtn>
