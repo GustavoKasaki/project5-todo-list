@@ -51,11 +51,6 @@ const TodoList = () => {
     <MainContainer>
       <Title as="p">{message}</Title>
       <ul>
-        <li>{term}</li>
-        <li>{criteria}</li>
-        <li>{value}</li>
-      </ul>
-      <ul>
         {tasks.map((t) => (
           <li key={t.title}>
             <Task
