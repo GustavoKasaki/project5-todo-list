@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import * as S from './styles'
 import { remove, edit } from '../../store/reducers/tasks'
 import TaskClass from '../../models/Task'
+import { SaveBtn } from '../../styles'
 
 type Props = TaskClass
 
@@ -46,7 +47,7 @@ const Task = ({
       <S.ActionBar>
         {isEditing ? (
           <>
-            <S.SaveBtn
+            <SaveBtn
               onClick={() => {
                 dispatch(
                   edit({
@@ -61,7 +62,7 @@ const Task = ({
               }}
             >
               Save
-            </S.SaveBtn>
+            </SaveBtn>
             <S.CancelBtn onClick={cancelEdit}>Discard changes</S.CancelBtn>
           </>
         ) : (
